@@ -19,6 +19,12 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue')
+  },
+  {
+    path: '/friends-profile/:id',
+    name: 'FriendsData',
+    component: () => import('../views/FriendsData.vue'),
+    props: true
   }
 ]
 

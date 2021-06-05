@@ -1,8 +1,8 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/dashboard">Dashboard</router-link> |
-    <router-link to="/about">About Us</router-link>
+    <router-link :to="{name: 'Dashboard'}">Dashboard</router-link> |
+    <router-link :to="{name: 'About'}">About Us</router-link>
   </div>
   <router-view/>
   <Footer/>

@@ -14,19 +14,23 @@
     <Button content="Change Data" bgcolor="green" color="#fff" @click="changeDataF"/>
     <Button :content="listButtonContent" bgcolor="skyBlue" color="#000" @click="showFriendsList"/>
     <ul v-if="show">
-        <li v-for="user in users" :key="user.name">
-            Name: {{ user['name'] }}
-            <br>
-            Country: {{ user['country'] }}
-        </li>
+        <div v-for="user in users" :key="user.id">
+            <router-link :to="{name: 'FriendsData', params: {id: user.id}}">
+                <li>
+                    Name: {{ user['name'] }}
+                    <br>
+                    Country: {{ user['country'] }}
+                </li>
+            </router-link>
+        </div>
     </ul>
     <Alert v-if="changeData">
         <form @submit="onSubmit">
-            <Input type="text" :model-value="user" @update:model-value="user = $event" placeholder="Surname" model="user" name="user"/>
-            <br>{{user}}
-            <Input type="text" placeholder="Country" model="country" name="country"/>
+            <input type="text" v-model="user" name="user" placeholder="Surname"/>
             <br>
-            <Button content="Submit"/>
+            <input type="text" v-model="country" name="country" placeholder="Country"/>
+            <br>
+            <Button type="submit" content="Submit"/>
             <Button bgcolor="red" color="white" @click="changeDataF">
                 <b>X</b> Close
             </Button>
@@ -38,14 +42,12 @@
 
 import Button from '@/components/Button.vue'
 import Alert from '@/components/Alert.vue'
-import Input from '@/components/Input.vue'
 
 export default {
     name: 'Dashboard',
     components: {
         Button, 
-        Alert,
-        Input
+        Alert
     },
     props: ['model'],
     data () {
@@ -55,12 +57,7 @@ export default {
             show: false,
             changeData: false,
             listButtonContent: 'show friends list',
-            users: [
-                {name: 'Cara Danvers', country: 'US'},
-                {name: 'Brad Traversy', country: 'Philliphi'},
-                {name: 'Lex Luthor', country: 'Sycobians'},
-                {name: 'Gbenga Peace', country: 'Nigeria'},
-            ],
+            users: [],
         }
     },
     methods : {
@@ -75,14 +72,18 @@ export default {
             e.preventDefault()
 
             const newUser = {
-                user: this.user,
-                country: this.country
+                user: this.users[0].name,
+                country: this.users[0].country
             }
             console.log(newUser)
         }
     },
-    computed : {
-        //
+    mounted() {
+        fetch('http://localhost:3000/users')
+            .then(res => res.json())
+            .then(data => this.users = data)
+            .catch(err => console.log(err.message)),
+            console.log(data)
     }
 }
 
@@ -110,6 +111,24 @@ ul li {
     padding: 5px;
     border-radius: 5px;
     background: #2c3e50;
-
+}
+ul a {
+    text-decoration: none;
+    color: #fff;
+}
+ul a:hover {
+    background: #2a5c5f;
+}
+ul a.router-link-exact-active {
+    background: #2a5c5f;
+}
+input {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    border: midnightblue;
+    box-sizing: border-box;
+    background: #fff;
+    width: 100%;
 }
 </style>
