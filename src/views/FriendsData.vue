@@ -1,11 +1,12 @@
 <template>
-    <h2>About {{  }}</h2>
-    <Button content="back" bgcolor="blue" color="white" @click="back"/>
-  <ul>
-      <li>Name: {{  }}</li>
-      <li>Country: {{  }}</li>
-      <li>Route ID: {{ id }}</li>
-  </ul>
+    <h2 v-if="user">About {{ user.name }}</h2>
+    <ul v-if="user">
+        <li>Name: {{ user.name }}</li>
+        <li>Country: {{ user.country }}</li>
+        <li>Route ID: {{ id }}</li>
+    </ul>
+    <div v-else>loading....</div>
+    <Button content="back" bgcolor="blue" color="white" />
 </template>
 
 <script>
@@ -24,9 +25,9 @@ data () {
     }
 },
 mounted() {
-    fetch('http://localhost:3000/users' + this.id)
+    fetch('http://localhost:3000/users/' + this.id)
         .then(res => res.json())
-        .then(data => this.users = data)
+        .then(data => this.user = data)
         .catch(err => console.log(err.message))
 }
 // computed: {

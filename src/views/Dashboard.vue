@@ -1,8 +1,8 @@
 <template>
     <div class="dashboard">
-        <h3>Hello, {{ users[0].name }} <br/> Welcome</h3>
+        <h3>Hello, <span v-if="users">{{ users[0].name }}</span> <br/> Welcome</h3>
     </div>
-    <ul>
+    <ul v-if="users">
         <li>
             <b>NAME:</b> {{ users[0].name }}
         </li>
@@ -13,7 +13,7 @@
     </ul>
     <Button content="Change Data" bgcolor="green" color="#fff" @click="changeDataF"/>
     <Button :content="listButtonContent" bgcolor="skyBlue" color="#000" @click="showFriendsList"/>
-    <ul v-if="show">
+    <ul v-if="show && users">
         <div v-for="user in users" :key="user.id">
             <router-link :to="{name: 'FriendsData', params: {id: user.id}}">
                 <li>
@@ -25,7 +25,7 @@
         </div>
     </ul>
     <Alert v-if="changeData">
-        <form @submit="onSubmit">
+        <form @submit="changeUserData">
             <input type="text" v-model="user" name="user" placeholder="Surname"/>
             <br>
             <input type="text" v-model="country" name="country" placeholder="Country"/>
@@ -57,7 +57,7 @@ export default {
             show: false,
             changeData: false,
             listButtonContent: 'show friends list',
-            users: [],
+            users: null,
         }
     },
     methods : {
@@ -68,22 +68,51 @@ export default {
             this.show = !this.show,
             this.listButtonContent = (this.show == true) ? 'Close List' : 'Show Friends List'
         },
-        onSubmit (e) {
+        async changeUserData(e, user) {
             e.preventDefault()
 
-            const newUser = {
+            let newUser = {
                 user: this.users[0].name,
                 country: this.users[0].country
             }
-            console.log(newUser)
+            if (newUser != '') {console.log(newUser)
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                }
+                const url = 'http://localhost:3000/users/1'
+                const res = await fetch(url)
+                const data = await res.json()
+                newUser = data
+                this.changeDataF()
+            }
         }
     },
-    mounted() {
-        fetch('http://localhost:3000/users')
-            .then(res => res.json())
-            .then(data => this.users = data)
-            .catch(err => console.log(err.message)),
-            console.log(data)
+    async created() {
+        const LoadData = async () => {
+            try {
+                const url = 'http://localhost:3000/users'
+                const res = await fetch(url)
+                const data = await res.json()
+                return data
+            } 
+            catch (err) {
+                console.log(err)
+            }
+        }
+        LoadData().then((data) => {
+            this.users = data
+        })
+
+        
+        
+        // fetch('http://localhost:3000/users')
+        //     .then(res => res.json())
+        //     .then((data) => {this.users = data})
+        //     .catch(err => console.log(err))
     }
 }
 
@@ -132,3 +161,9 @@ input {
     width: 100%;
 }
 </style>
+
+  function newFunction() {
+    tg899tit7t(); {
+      return ''
+    }
+  }
