@@ -11,7 +11,8 @@
             <b>COUNTRY:</b> {{ users[0].country }}
         </li>
     </ul>
-    <Button content="Change Data" bgcolor="green" color="#fff" @click="changeDataF"/>
+    <div v-else>loading...</div>
+    <Button content="Add User" bgcolor="green" color="#fff" @click="addUserForm"/>
     <Button :content="listButtonContent" bgcolor="skyBlue" color="#000" @click="showFriendsList"/>
     <ul v-if="show && users">
         <div v-for="user in users" :key="user.id">
@@ -24,14 +25,14 @@
             </router-link>
         </div>
     </ul>
-    <Alert v-if="changeData">
-        <form @submit="changeUserData">
+    <Alert v-if="showForm">
+        <form @submit="addUser">
             <input type="text" v-model="user" name="user" placeholder="Surname"/>
             <br>
             <input type="text" v-model="country" name="country" placeholder="Country"/>
             <br>
-            <Button type="submit" content="Submit"/>
-            <Button bgcolor="red" color="white" @click="changeDataF">
+            <Button bgcolor="#42b983" type="submit" content="Submit"/>
+            <Button bgcolor="red" color="white" @click="addUserForm">
                 <b>X</b> Close
             </Button>
         </form>
@@ -55,40 +56,41 @@ export default {
             user: '',
             country: '',
             show: false,
-            changeData: false,
-            listButtonContent: 'show friends list',
+            showForm: false,
+            listButtonContent: 'Friends List',
             users: null,
         }
     },
     methods : {
-        changeDataF () {
-            this.changeData = !this.changeData
+        addUserForm () {
+            this.showForm = !this.showForm
         },
         showFriendsList () {
             this.show = !this.show,
-            this.listButtonContent = (this.show == true) ? 'Close List' : 'Show Friends List'
+            this.listButtonContent = (this.show == true) ? 'X Close List' : 'Friends List'
         },
-        async changeUserData(e, user) {
+        async addUser(e, user) {
             e.preventDefault()
 
             let newUser = {
-                user: this.users[0].name,
-                country: this.users[0].country
+                name: this.user,
+                country: this.country
             }
-            if (newUser != '') {console.log(newUser)
-                const requestOptions = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(user)
-                }
-                const url = 'http://localhost:3000/users/1'
-                const res = await fetch(url)
-                const data = await res.json()
-                newUser = data
-                this.changeDataF()
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
             }
+            const url = 'http://localhost:3000/users'
+            const res = await fetch(url, requestOptions)
+            const data = await res.json()
+            this.users = [...this.users, data],
+
+            this.user = '',
+            this.country = '',
+            this.showForm = !this.showForm
         }
     },
     async created() {
@@ -106,25 +108,12 @@ export default {
         LoadData().then((data) => {
             this.users = data
         })
-
-        
-        
-        // fetch('http://localhost:3000/users')
-        //     .then(res => res.json())
-        //     .then((data) => {this.users = data})
-        //     .catch(err => console.log(err))
     }
 }
 
 </script>
 
 <style scoped>
-button {
-    border: 1.5px solid #2c3e50;
-    border-radius: 5px;
-    padding: 3px;
-    background: #42b983;
-}
 ul {
     margin: 10px 50px;
     padding: 10px;
@@ -161,9 +150,3 @@ input {
     width: 100%;
 }
 </style>
-
-  function newFunction() {
-    tg899tit7t(); {
-      return ''
-    }
-  }

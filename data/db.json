@@ -1,8 +1,24 @@
 {
-    "users": [
-        {"id": 1, "name": "Cara Danvers", "country": "US"},
-        {"id": 2, "name": "Brad Traversy", "country": "Philliphi"},
-        {"id": 3, "name": "Lex Luthor", "country": "Sycobians"},
-        {"id": 4, "name": "Gbenga Peace", "country": "Nigeria"}
-    ]
+  "users": [
+    {
+      "name": "Brad Traversy",
+      "country": "Philliphi",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "name": "Lex Luthor",
+      "country": "Sycobians"
+    },
+    {
+      "id": 3,
+      "name": "Gbenga Peace",
+      "country": "Nigeria"
+    }
+  ],
+  "admins": [
+    {
+      "delete-alert": false
+    }
+  ]
 }
