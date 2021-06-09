@@ -115,6 +115,9 @@ export default {
 
 <style scoped>
 div, ul, button {
+    font-family: Avenir, Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-align: center;
 }
 
