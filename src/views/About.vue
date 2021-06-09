@@ -5,7 +5,7 @@
       You can learn more about us here.
     </p>
     <p>
-      I,m <b>Balogun gbenga peace</b>. Popularly known as <b>Cysteine</b> among my colleagues. 
+      I,m <b>Balogun Gbenga Peace</b>. Popularly known as <b>Cysteine</b> among my colleagues. 
       <i>I have a strong passion for programming</i>
     </p>
   </div>

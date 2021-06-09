@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style scoped>
+#app {
+    text-align: center;
+}
 .footer {
     padding: 20px;
     width: 100%;

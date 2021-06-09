@@ -114,6 +114,10 @@ export default {
 </script>
 
 <style scoped>
+#app {
+    text-align: center;
+}
+
 ul {
     margin: 10px 50px;
     padding: 10px;
