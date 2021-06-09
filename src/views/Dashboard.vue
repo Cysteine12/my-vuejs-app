@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style scoped>
-#app {
+div, ul, button {
     text-align: center;
 }
 
