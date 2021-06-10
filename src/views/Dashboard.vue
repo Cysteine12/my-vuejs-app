@@ -1,6 +1,9 @@
 <template>
+    <Header header="Dashboard" />
     <div class="dashboard">
-        <h3>Hello, <span v-if="users">{{ users[0].name }}</span> <br/> Welcome</h3>
+        <h3>
+            <span v-if="users">Welcome {{ users[0].name }}</span>
+        </h3>
     </div>
     <ul v-if="users">
         <li>
@@ -15,9 +18,10 @@
     <Button content="Add User" bgcolor="green" color="#fff" @click="addUserForm"/>
     <Button :content="listButtonContent" bgcolor="skyBlue" color="#000" @click="showFriendsList"/>
     <ul v-if="show && users">
-        <div v-for="user in users" :key="user.id">
+        <div v-for="(user, index) in users" :key="user.id">
             <router-link :to="{name: 'FriendsData', params: {id: user.id}}">
                 <li>
+                    {{ index + 1 + '. ' }}
                     Name: {{ user['name'] }}
                     <br>
                     Country: {{ user['country'] }}
@@ -41,12 +45,14 @@
 
 <script>
 
+import Header from '@/components/Header.vue'
 import Button from '@/components/Button.vue'
 import Alert from '@/components/Alert.vue'
 
 export default {
     name: 'Dashboard',
     components: {
+        Header,
         Button, 
         Alert
     },
@@ -83,7 +89,7 @@ export default {
                 },
                 body: JSON.stringify(newUser)
             }
-            const url = 'http://localhost:3000/users'
+            const url = 'api/users'
             const res = await fetch(url, requestOptions)
             const data = await res.json()
             this.users = [...this.users, data],
@@ -93,10 +99,10 @@ export default {
             this.showForm = !this.showForm
         }
     },
-    async created() {
+    created() {
         const LoadData = async () => {
             try {
-                const url = 'http://localhost:3000/users'
+                const url = 'api/users'
                 const res = await fetch(url)
                 const data = await res.json()
                 return data
@@ -122,10 +128,11 @@ div, ul, button {
 }
 
 ul {
-    margin: 10px 50px;
+    margin: 10px auto;
     padding: 10px;
     border: 2px solid #2c3e50;
     border-radius: 10px;
+    max-width: 400px;
     display: block;
     overflow: none;
     background: #42b983;
@@ -154,6 +161,7 @@ input {
     border: midnightblue;
     box-sizing: border-box;
     background: #fff;
+    color: #000;
     width: 100%;
 }
 </style>

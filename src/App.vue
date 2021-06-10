@@ -1,9 +1,4 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link :to="{name: 'Dashboard'}">Dashboard</router-link> |
-    <router-link :to="{name: 'About'}">About Us</router-link>
-  </div>
   <router-view/>
   <Footer/>
 </template>
@@ -20,24 +15,11 @@ export default {
 
 <style>
 #app {
-  padding-bottom: 150px;
-  z-index: 1;
-}
-
-#nav {
-  margin-bottom: 10px;
-  border-bottom: 3px solid #42b983;
-  padding: 30px;
-  background: #2c3e50;
   text-align: center;
+  padding-bottom: 150px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #fff;
-}
-
-#nav a.router-link-exact-active {
+/* #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>

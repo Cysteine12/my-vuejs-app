@@ -6,14 +6,14 @@
       "id": 1
     },
     {
-      "id": 2,
       "name": "Lex Luthor",
-      "country": "Sycobians"
+      "country": "Sycobians",
+      "id": 2
     },
     {
-      "id": 3,
-      "name": "Gbenga Peace",
-      "country": "Nigeria"
+      "name": "Cysteine",
+      "country": "Nigeria",
+      "id": 3
     }
   ],
   "admins": [

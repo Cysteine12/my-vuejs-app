@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <h2 v-if="user">About {{ user.name }}</h2>
     <ul v-if="user">
         <li>Name: {{ user.name }}</li>
@@ -24,12 +25,14 @@
 
 <script>
 
+import Header from '@/components/Header.vue'
 import Button from '@/components/Button.vue'
 import Alert from '@/components/Alert.vue'
 
 export default {
 name: 'FriendsData',
 components: {
+    Header,
     Button,
     Alert
 },
@@ -60,7 +63,7 @@ methods: {
                     name : this.name,
                     country: this.country
                 }
-                const url = `http://localhost:3000/users/${this.id}`
+                const url = `api/users/${this.id}`
 
                 const requestOptions = {
                     method: 'PUT',
@@ -88,7 +91,7 @@ methods: {
     deleteUser() {
         const DeleteUser = async () => {
             try {
-                const url = `http://localhost:3000/users/${this.id}`
+                const url = `api/users/${this.id}`
 
                 const requestOptions = {
                     method: 'DELETE'
@@ -113,7 +116,7 @@ methods: {
     }
 },
 mounted() {
-    fetch(`http://localhost:3000/users/${this.id}`)
+    fetch(`api/users/${this.id}`)
         .then(res => res.json())
         .then(data => this.user = data)
         .catch(err => console.log(err.message))
@@ -121,16 +124,14 @@ mounted() {
 }
 </script>
 
-<style>
-#app {
-    text-align: center;
-}
+<style scoped>
 
 ul {
-    margin: 10px 50px;
+    margin: 10px auto;
     padding: 10px;
     border: 2px solid #2c3e50;
     border-radius: 10px;
+    max-width: 400px;
     display: block;
     overflow: none;
     background: #42b983;
@@ -150,6 +151,7 @@ input {
     border: midnightblue;
     box-sizing: border-box;
     background: #fff;
+    color: #000;
     width: 100%;
 }
 
